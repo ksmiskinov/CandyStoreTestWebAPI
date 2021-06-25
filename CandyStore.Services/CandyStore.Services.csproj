@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CandyStore.Domain\CandyStore.Domain.csproj" />
+    <ProjectReference Include="..\CandyStore.Repository\CandyStore.Repository.csproj" />
+    <ProjectReference Include="..\CandyStore.Services.Abstractions\CandyStore.Services.Abstractions.csproj" />
+  </ItemGroup>
+
+</Project>
