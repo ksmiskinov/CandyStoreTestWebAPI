@@ -14,7 +14,7 @@ namespace CandyStore.Web.ViewModel
     public string Name { get; set; }
 
     /// <summary>
-    /// Наименование колоды карт
+    /// Адрес магазина
     /// </summary>
     public string Address { get; set; }
 

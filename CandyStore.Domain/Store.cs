@@ -21,7 +21,7 @@ namespace CandyStore.Domain
     public string Address { get; set; }
 
     /// <summary>
-    /// Наименовани магазина
+    /// Наименование магазина
     /// </summary>
     public string Name { get; set; }
 

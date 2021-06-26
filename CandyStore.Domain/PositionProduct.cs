@@ -3,7 +3,7 @@ using System;
 namespace CandyStore.Domain
 {
   /// <summary>
-  /// Описывает позицию карты в колоде.
+  /// Описывает позицию товара в магазине.
   /// </summary>
 
   public class PositionProduct
