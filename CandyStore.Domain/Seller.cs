@@ -32,17 +32,30 @@ namespace CandyStore.Domain
 
 
     /// <summary>
+    /// Рабочий относится к определённому магазину
+    /// </summary>
+    public Guid StoreId { get; set; }
+
+
+    /// <summary>
+    /// Ассоциация с сущностью магазин 
+    /// </summary>
+    public Store Store { get; set; }
+
+    /// <summary>
     /// Создание нового сотрудника (продавец). 
     /// </summary>
     /// <returns></returns>
     public static Seller New(string name,
                              string familyName,
-                             string middleName)
+                             string middleName,
+                             Guid storeId)
       => new Seller()
       {
         Name = name,
         FamilyName = familyName,
         MiddleName = middleName,
+        StoreId = storeId,
       };
   }
 }

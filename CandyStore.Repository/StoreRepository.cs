@@ -20,13 +20,17 @@ namespace CandyStore.Repository
     async Task<Store> IStoreRepository.FetchStoreAsync(Guid storeId)
     {
       return await _context.Stores
-                         .FirstOrDefaultAsync(x => x.Id == storeId);
+                           .Include(x=>x.PositionProducts)
+                           .ThenInclude(x=>x.Product)
+                           .FirstOrDefaultAsync(x => x.Id == storeId);
     }
 
     async Task<IList<Store>> IStoreRepository.FetchStoresAsync()
     {
       return await _context.Stores
-                         .ToListAsync();
+                           .Include(x => x.PositionProducts)
+                           .ThenInclude(x => x.Product)
+                           .ToListAsync();
     }
     async Task IStoreRepository.AddStoreAsync(Store store)
     {
@@ -36,7 +40,8 @@ namespace CandyStore.Repository
 
     async Task IStoreRepository.RemoveStoreAsync(Guid storeId)
     {
-      var store = await _context.Stores.FirstOrDefaultAsync(x => x.Id == storeId);
+      var store = await _context.Stores
+                                .FirstOrDefaultAsync(x => x.Id == storeId);
       _context.Stores.Remove(store);
 
       await _context.SaveChangesAsync();
@@ -44,7 +49,8 @@ namespace CandyStore.Repository
 
     async Task IStoreRepository.UpdateStoreAsync(Store store)
     {
-      var storeOld = await _context.Stores.FirstOrDefaultAsync(x => x.Id == store.Id);
+      var storeOld = await _context.Stores
+                                   .FirstOrDefaultAsync(x => x.Id == store.Id);
       storeOld.Name = store.Name;
       storeOld.Address = store.Address;
 

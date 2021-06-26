@@ -10,14 +10,14 @@ namespace CandyStore.Domain.Interfaces
     /// Получить список сущностей Продовец
     /// </summary>
     /// <returns></returns>
-    Task<IList<Seller>> FetchSellerAsync();
+    Task<IList<Seller>> FetchSellersAsync();
 
     /// <summary>
     /// Получить сущность Продовец
     /// </summary>
     /// <param name="sellerId"></param>
     /// <returns></returns>
-    Task<Seller> FetchSellersAsync(Guid sellerId);
+    Task<Seller> FetchSellerAsync(Guid sellerId);
 
     /// <summary>
     /// Добавить сущность Продовец

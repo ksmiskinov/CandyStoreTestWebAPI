@@ -20,12 +20,16 @@ namespace CandyStore.Repository
     async Task<Product> ICandyProductRepository.FetchProductAsync(Guid productId)
     {
       return await _context.Products
+                           .Include(x=>x.PositionProducts)
+                           .ThenInclude(x=>x.Store)
                            .FirstOrDefaultAsync(x => x.Id == productId);
     }
 
     async Task<IList<Product>> ICandyProductRepository.FetchProductsAsync()
     {
       return await _context.Products
+                           .Include(x => x.PositionProducts)
+                           .ThenInclude(x => x.Store)
                            .ToListAsync();
     }
     async Task ICandyProductRepository.AddProductAsync(Product product)

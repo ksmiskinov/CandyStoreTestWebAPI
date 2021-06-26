@@ -17,16 +17,18 @@ namespace CandyStore.Repository
       _context = context;
     }
 
-    async Task<Seller> ISellerStoreRepository.FetchSellersAsync(Guid sellerId)
+    async Task<Seller> ISellerStoreRepository.FetchSellerAsync(Guid sellerId)
     {
       return await _context.Sellers
-                         .FirstOrDefaultAsync(x => x.Id == sellerId);
+                           .Include(x=>x.Store)
+                           .FirstOrDefaultAsync(x => x.Id == sellerId);
     }
 
-    async Task<IList<Seller>> ISellerStoreRepository.FetchSellerAsync()
+    async Task<IList<Seller>> ISellerStoreRepository.FetchSellersAsync()
     {
       return await _context.Sellers
-                         .ToListAsync();
+                           .Include(x => x.Store)
+                           .ToListAsync();
     }
     async Task ISellerStoreRepository.AddStoreAsync(Seller seller)
     {
@@ -36,7 +38,8 @@ namespace CandyStore.Repository
 
     async Task ISellerStoreRepository.RemoveSellerAsync(Guid sellerId)
     {
-      var seller = await _context.Sellers.FirstOrDefaultAsync(x => x.Id == sellerId);
+      var seller = await _context.Sellers
+                                 .FirstOrDefaultAsync(x => x.Id == sellerId);
       _context.Sellers.Remove(seller);
 
       await _context.SaveChangesAsync();

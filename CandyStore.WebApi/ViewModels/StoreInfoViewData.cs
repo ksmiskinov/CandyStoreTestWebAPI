@@ -23,7 +23,7 @@ namespace CandyStore.Web.ViewModel
     /// </summary>
 
 
-
+    //TODO добавить вывод товаров в конкртном магазине
     public static StoreInfoViewData New(string name, string address)
       => new StoreInfoViewData
       {
