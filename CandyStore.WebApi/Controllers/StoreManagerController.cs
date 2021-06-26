@@ -1,7 +1,9 @@
-﻿using CandyStore.Services.Abstractions;
+﻿using CandyStore.Domain;
+using CandyStore.Services.Abstractions;
 using CandyStore.Web.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace CandyStore.Web.Controllers
@@ -55,9 +57,9 @@ namespace CandyStore.Web.Controllers
     /// <returns></returns>
     [HttpPut]
     [Route("Store")]
-    async public Task<IActionResult> CreateStore(string name, string adress)
+    async public Task<IActionResult> CreateStore(string name, string address)
     {
-      var store = await _storeManagerSaveDataBuilder.NewStoreSaveBuild(name, adress);
+      var store = await _storeManagerSaveDataBuilder.NewStoreSaveBuild(name, address);
       if (store == null)
         return new BadRequestResult();
 
@@ -77,5 +79,30 @@ namespace CandyStore.Web.Controllers
       await _storeServices.RemoveStoreAsync(storeId);
       return new OkResult();
     }
+
+
+    /// <summary>
+    /// Добавить позицию продукта 
+    /// </summary>
+    /// <returns></returns>
+    [HttpPut]
+    [Route("ProductPositionStore")]
+    async public Task<IActionResult> AddProductPositionStore(Guid storeId, Guid productId, int balance )
+    {
+      //TODO: Вынести в builder отдельный Controller
+      var store = await _storeServices.GetStoreAsync(storeId);
+      if (store == null)
+        return new BadRequestResult();
+
+      var product = store.PositionProducts.FirstOrDefault(x => x.ProductId == productId);
+      if (product != null)
+        product.StockBalance = balance;
+      else
+        store.PositionProducts.Add(PositionProduct.New(storeId, productId, balance));
+      await _storeServices.UpdateStoreAsync(store);
+
+      return new OkResult();
+    }
+
   }
 }

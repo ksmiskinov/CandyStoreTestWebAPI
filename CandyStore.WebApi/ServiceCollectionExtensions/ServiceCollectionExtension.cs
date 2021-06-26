@@ -13,6 +13,12 @@ namespace CandyStore.Web.ServiceCollectionExtensions
     /// <returns></returns>
     public static IServiceCollection AddDataBuilders(this IServiceCollection services)
       => services.AddTransient<IStoreManagerViewDataBuilder, StoreManagerViewDataBuilder>()
-                 .AddTransient<IStoreManagerSaveDataBuilder, StoreManagerSaveDataBuilder>();
+                 .AddTransient<IStoreManagerSaveDataBuilder, StoreManagerSaveDataBuilder>()
+                 
+                 .AddTransient<ISellerManagerViewDataBuilder, SellerManagerViewDataBuilder>()
+                 .AddTransient<ISellerManagerSaveDataBuilder, SellerManagerSaveDataBuilder>()
+
+                 .AddTransient<IProductManagerViewDataBuilder, ProductManagerViewDataBuilder>()
+                 .AddTransient<IProductManagerSaveDataBuilder, ProductManagerSaveDataBuilder>();
   }
 }

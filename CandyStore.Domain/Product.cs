@@ -42,21 +42,19 @@ namespace CandyStore.Domain
 
 
     /// <summary>
-    /// Создать колоду карт
+    /// Создать продукт
     /// </summary>
     /// <returns></returns>
     public static Product New(string name,
                               string description,
                               UnitKind unit,
-                              decimal price,
-                              IList<PositionProduct> positionProducts)
+                              decimal price)
       => new Product()
       {
         Name = name,
         Description = description,
         Unit = unit,
-        Price = price,
-        PositionProducts = positionProducts
+        Price = price
       };
 
   }

@@ -9,6 +9,7 @@ namespace CandyStore.Services.Extensions.DependencyInjection
     public static IServiceCollection AddCandyStoreRepositories(this IServiceCollection services)
        => services
          .AddTransient<IStoreRepository, StoreRepository>()
-         .AddTransient<ISellerStoreRepository, SellerStoreRepository>();
+         .AddTransient<ISellerStoreRepository, SellerStoreRepository>()
+         .AddTransient<ICandyProductRepository, CandyProductRepository>();
   }
 }

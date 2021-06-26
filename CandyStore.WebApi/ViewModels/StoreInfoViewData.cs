@@ -21,14 +21,14 @@ namespace CandyStore.Web.ViewModel
     /// <summary>
     /// Список позиций продукта
     /// </summary>
+    public IList<ProductStoreViewData> Products { get; set; }
 
-
-    //TODO добавить вывод товаров в конкртном магазине
-    public static StoreInfoViewData New(string name, string address)
+    public static StoreInfoViewData New(string name, string address, IList<ProductStoreViewData> products)
       => new StoreInfoViewData
       {
         Name = name,
-        Address = address
+        Address = address,
+        Products = products
       };
   }
 }

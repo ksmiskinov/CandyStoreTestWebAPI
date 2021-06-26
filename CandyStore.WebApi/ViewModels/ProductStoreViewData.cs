@@ -3,16 +3,11 @@ using System;
 
 namespace CandyStore.Web.ViewModel
 {
-  public class ProductViewData
+  public class ProductStoreViewData
   {
-    private ProductViewData()
+    private ProductStoreViewData()
     {
     }
-
-    /// <summary>
-    /// Уникальный идентификатор объекта
-    /// </summary>
-    public Guid Id { get; set; }
 
     /// <summary>
     /// Наименование товара
@@ -34,18 +29,24 @@ namespace CandyStore.Web.ViewModel
     /// </summary>
     public decimal Price { get; set; }
  
-    public static ProductViewData New(Guid id,
+    /// <summary>
+    /// Остаток на складке
+    /// </summary>
+    public decimal StockBalance { get; set; }
+
+    public static ProductStoreViewData New(
                                       string name,
                                       string description,
                                       UnitKind unit,
-                                      decimal price)
-      => new ProductViewData
+                                      decimal price,
+                                      decimal stockBalance)
+      => new ProductStoreViewData
       {
-        Id = id,
         Name = name,
         Description = description,
         Unit = unit,
-        Price = price
+        Price = price,
+        StockBalance = stockBalance
       };
   }
 }

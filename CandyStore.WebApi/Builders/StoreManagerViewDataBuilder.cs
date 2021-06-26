@@ -29,8 +29,13 @@ namespace CandyStore.Web.Builders
         return null;
 
       return StoreInfoViewData.New(store.Name,
-                                  store.Address);
-      //TODO добавить вывод товаров в конкртном магазине
+                                  store.Address,
+                                  store.PositionProducts.Select(x=>ProductStoreViewData.New(x.Product.Name,
+                                                                                            x.Product.Description,
+                                                                                            x.Product.Unit,
+                                                                                            x.Product.Price,
+                                                                                            x.StockBalance)).ToList()
+                                  );
     }
   }
 }
