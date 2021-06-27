@@ -2,6 +2,7 @@
 using CandyStore.Services.Abstractions;
 using CandyStore.Web.Interfaces;
 using CandyStore.Web.ViewModel;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -35,6 +36,8 @@ namespace CandyStore.Web.Controllers
     /// <returns></returns>
     [HttpGet]
     [Route("Stores")]
+    [ProducesResponseType(typeof(IList<StoreViewData>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
     async public Task<IActionResult> GetStores()
     {
       var storeViewDataList = await _storeManagerViewDataBuilder.StoresViewDataBuild();
@@ -47,6 +50,8 @@ namespace CandyStore.Web.Controllers
     /// <returns></returns>
     [HttpGet]
     [Route("Store")]
+    [ProducesResponseType(typeof(StoreViewData), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
     async public Task<IActionResult> GetStore(Guid storeId)
     {
       var storeInfoViewData = await _storeManagerViewDataBuilder.StoreViewDataBuild(storeId);

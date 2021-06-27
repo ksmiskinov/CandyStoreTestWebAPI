@@ -26,7 +26,9 @@ namespace CandyStore.Web
       services.AddDbContext<CandyStoreData>(options =>
           options.UseSqlServer(connection));
 
+     
       services.AddControllers();
+      services.AddSwaggerGen(); 
 
       services.AddCandyStoreRepositories();
 
@@ -40,6 +42,8 @@ namespace CandyStore.Web
       if (env.IsDevelopment())
       {
         app.UseDeveloperExceptionPage();
+        app.UseSwagger();
+        app.UseSwaggerUI(sw => { sw.SwaggerEndpoint("../swagger/v1/swagger.json", "TestCandyStoreWebApi"); });
       }
 
       //app.UseHttpsRedirection();

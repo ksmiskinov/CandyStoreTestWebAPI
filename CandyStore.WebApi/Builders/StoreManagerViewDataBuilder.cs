@@ -1,6 +1,8 @@
 ﻿using CandyStore.Services.Abstractions;
 using CandyStore.Web.Interfaces;
 using CandyStore.Web.ViewModel;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,9 +15,9 @@ namespace CandyStore.Web.Builders
 
     private readonly IStoreServices _storeServices;
 
-    public StoreManagerViewDataBuilder(IStoreServices storeServices) 
+    public StoreManagerViewDataBuilder(IStoreServices storeServices)
       => _storeServices = storeServices ?? throw new ArgumentNullException(nameof(IStoreServices));
- 
+
     async Task<IList<StoreViewData>> IStoreManagerViewDataBuilder.StoresViewDataBuild()
     {
       var stores = await _storeServices.GetStoresAsync();
@@ -30,11 +32,11 @@ namespace CandyStore.Web.Builders
 
       return StoreInfoViewData.New(store.Name,
                                   store.Address,
-                                  store.PositionProducts.Select(x=>ProductStoreViewData.New(x.Product.Name,
-                                                                                            x.Product.Description,
-                                                                                            x.Product.Unit,
-                                                                                            x.Product.Price,
-                                                                                            x.StockBalance)).ToList()
+                                  store.PositionProducts.Select(x => ProductStoreViewData.New(x.Product.Name,
+                                                                                              x.Product.Description,
+                                                                                              x.Product.Unit,
+                                                                                              x.Product.Price,
+                                                                                              x.StockBalance)).ToList()
                                   );
     }
   }

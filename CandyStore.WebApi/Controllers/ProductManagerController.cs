@@ -1,8 +1,11 @@
 ﻿using CandyStore.Domain;
 using CandyStore.Services.Abstractions;
 using CandyStore.Web.Interfaces;
+using CandyStore.Web.ViewModel;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace CandyStore.Web.Controllers
@@ -32,6 +35,8 @@ namespace CandyStore.Web.Controllers
     /// <returns></returns>
     [HttpGet]
     [Route("Products")]
+    [ProducesResponseType(typeof(IList<ProductViewData>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     async public Task<IActionResult> GetProducts()
     {
       var productViewDataList = await _productManagerViewDataBuilder.ProductsViewDataBuild();
@@ -44,9 +49,11 @@ namespace CandyStore.Web.Controllers
     /// <returns></returns>
     [HttpGet]
     [Route("Product")]
-    async public Task<IActionResult> GetProduct(Guid storeId)
+    [ProducesResponseType(typeof(ProductViewData), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    async public Task<IActionResult> GetProduct(Guid productId)
     {
-      var productInfoViewData = await _productManagerViewDataBuilder.ProductViewDataBuild(storeId);
+      var productInfoViewData = await _productManagerViewDataBuilder.ProductViewDataBuild(productId);
       return new ObjectResult(productInfoViewData);
     }
 
@@ -56,6 +63,8 @@ namespace CandyStore.Web.Controllers
     /// <returns></returns>
     [HttpPut]
     [Route("Product")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     async public Task<IActionResult> CreateStore(string name,
                                                  string description,
                                                  UnitKind unit,
@@ -79,6 +88,8 @@ namespace CandyStore.Web.Controllers
     /// <returns></returns>
     [HttpDelete]
     [Route("Product")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     async public Task<IActionResult> DeleteProduct(Guid productId)
     {
       await _candyProductServices.RemoveProductAsync(productId);
