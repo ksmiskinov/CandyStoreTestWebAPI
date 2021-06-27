@@ -19,6 +19,11 @@ namespace CandyStore.Web.ServiceCollectionExtensions
                  .AddTransient<ISellerManagerSaveDataBuilder, SellerManagerSaveDataBuilder>()
 
                  .AddTransient<IProductManagerViewDataBuilder, ProductManagerViewDataBuilder>()
-                 .AddTransient<IProductManagerSaveDataBuilder, ProductManagerSaveDataBuilder>();
+                 .AddTransient<IProductManagerSaveDataBuilder, ProductManagerSaveDataBuilder>()
+      
+                 .AddTransient<IReportsViewDataBuilder, ReportsViewDataBuilder>();
+
+
+    
   }
 }
