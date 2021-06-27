@@ -1,4 +1,6 @@
 ﻿using CandyStore.Domain;
+using CandyStore.Web.ViewModel;
+using System;
 using System.Threading.Tasks;
 
 namespace CandyStore.Web.Interfaces
@@ -15,5 +17,7 @@ namespace CandyStore.Web.Interfaces
     /// <param name="adress">Адрес магазина</param>
     /// <returns></returns>
     Task<Store> NewStoreSaveBuild(string name, string address);
+    Task<Store> AddProductPositionSaveBuild(Guid storeId, Guid productId, int balance);
+    Task<Store> AddOrderSaveBuild(OrderStoreSaveModel postionOrder);
   }
 }

@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 
 namespace CandyStore.Domain
 {
@@ -16,30 +17,34 @@ namespace CandyStore.Domain
     public Guid Id { get; set; }
 
     /// <summary>
-    /// Дата покупки
+    /// Дата заказа
     /// </summary>
     public DateTime DateOrder { get; set; }
 
+    ///// <summary>
+    ///// Уникальный идентификатор объекта
+    ///// </summary>
+    //public Guid SellerId { get; set; }
 
-    public Guid ProductId { get; set; }
+    ///// <summary>
+    ///// Прадавец
+    ///// </summary>
+    //public Seller Seller { get; set; }
 
-    public Product Product { get; set; }
-    
     /// <summary>
-    /// Количество товара 
+    /// Позиции заказа
     /// </summary>
-    public int Count { get; set; }
-
-
-    
+    public IList<PositionOrder> PositionOrders { get; set; }
+ 
     /// <summary>
     /// Создание нового заказа
     /// </summary>
     /// <returns></returns>
-    public static Order New()
+    public static Order New(IList<PositionOrder> positionOrders)
       => new Order()
       {
-       
+        DateOrder = DateTime.Now,
+        PositionOrders = positionOrders
       };
   }
 }

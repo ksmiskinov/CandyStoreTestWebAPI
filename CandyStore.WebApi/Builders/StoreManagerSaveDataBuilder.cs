@@ -1,8 +1,10 @@
 ﻿using CandyStore.Domain;
 using CandyStore.Services.Abstractions;
 using CandyStore.Web.Interfaces;
+using CandyStore.Web.ViewModel;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -29,6 +31,48 @@ namespace CandyStore.Web.Builders
       }
       _logger.LogInformation("NewStoreSaveBuild: Магазин по такому адресу уже существует.");
       return default;
+    }
+
+    async Task<Store> IStoreManagerSaveDataBuilder.AddProductPositionSaveBuild(Guid storeId, Guid productId, int balance)
+    {
+      var store = await _storeServices.GetStoreAsync(storeId);
+      if (store == null)
+        return default;
+
+    var product = store.PositionProducts.FirstOrDefault(x => x.ProductId == productId);
+      if (product != null)
+        product.StockBalance = balance;
+      else
+        store.PositionProducts.Add(PositionProduct.New(storeId, productId, balance));
+      return store;
+    }
+
+
+    async Task<Store> IStoreManagerSaveDataBuilder.AddOrderSaveBuild(OrderStoreSaveModel postionOrder)
+    {
+      var store = await _storeServices.GetStoreAsync(postionOrder.StoreId);
+      if (store == null)
+        return default;
+
+      foreach (var positionOrder in postionOrder.PostionOrders)
+      {
+        var positionProduct = store.PositionProducts.FirstOrDefault(x => x.ProductId == positionOrder.ProductId);
+        if (positionProduct == null)
+          return default;
+
+        if (positionProduct.StockBalance < positionOrder.Count)
+          return default;
+        positionProduct.StockBalance -= positionOrder.Count;
+      }
+
+      var postionOrders = postionOrder.PostionOrders
+                                       .Select(x => PositionOrder.New(x.ProductId, x.Count))
+                                       .ToList();
+      var ordertest = Order.New(postionOrders);
+      if (store.Orders == null)
+        store.Orders = new List<Order>();
+      store.Orders.Add(ordertest);
+      return store;
     }
   }
 }

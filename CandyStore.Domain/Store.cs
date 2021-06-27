@@ -29,6 +29,11 @@ namespace CandyStore.Domain
     /// Множество позиций разных продуктов 
     /// </summary>
     public IList<PositionProduct> PositionProducts { get; set; }
+ 
+    /// <summary>
+    /// Заказы магазина 
+    /// </summary>
+    public IList<Order> Orders { get; set; }
 
     /// <summary>
     /// Создание нового магазина

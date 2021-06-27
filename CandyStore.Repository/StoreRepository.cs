@@ -22,6 +22,8 @@ namespace CandyStore.Repository
       return await _context.Stores
                            .Include(x=>x.PositionProducts)
                            .ThenInclude(x=>x.Product)
+                           .Include(x => x.Orders)
+                           .ThenInclude(x => x.PositionOrders)
                            .FirstOrDefaultAsync(x => x.Id == storeId);
     }
 
@@ -30,6 +32,8 @@ namespace CandyStore.Repository
       return await _context.Stores
                            .Include(x => x.PositionProducts)
                            .ThenInclude(x => x.Product)
+                           .Include(x => x.Orders)
+                           .ThenInclude(x => x.PositionOrders)
                            .ToListAsync();
     }
     async Task IStoreRepository.AddStoreAsync(Store store)
